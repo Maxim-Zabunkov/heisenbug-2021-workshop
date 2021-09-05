@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>$TITLE</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+
+    <style>
+        body {
+            background-color: #edecea;
+        }
+
+        div.content {
+            margin-top: 70px;
+        }
+
+        .category,
+        .bold {
+            font-weight: bold;
+        }
+
+        .message,
+        .more-info {
+            white-space: pre-wrap;
+        }
+
+        .details-content {
+            margin-left: 20px;
+        }
+
+        div.log-entry {
+            margin-left: 21px;
+        }
+
+        div.more-info {
+            border: gray solid 1px;
+        }
+
+        div.more-info.compact {
+            overflow: auto;
+            max-height: 20em;
+        }
+
+        div.more-info button {
+            position: absolute;
+            right: 40px;
+        }
+
+        div.log-entry.success,
+        details.success>summary {
+            color: green;
+        }
+
+        div.log-entry.warn,
+        details.warn>summary {
+            color: brown;
+        }
+
+        div.log-entry.error,
+        details.error>summary {
+            color: red;
+        }
+
+        div.log-entry.debug,
+        details.debug>summary,
+        div.log-entry.skipped,
+        details.skipped>summary {
+            color: gray;
+            display: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .topbar {
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            right: 10px;
+            border: darkblue solib 1px;
+            border-radius: 5px;
+            background-color: lightgray;
+            padding: 10px;
+            z-index: 100;
+        }
+
+        .details.test-not-failed {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <details class="topbar">
+        <summary class="bold"> Filters:
+            <input tupe="text" placeholder="Type to filter" onchange="filterByText(this.value)">
+            <button onclick="expandFailures()">Expand Failures</button>
+            <button onclick="expandAll()">Expand All</button>
+            <button onclick="collapseAll()">Collapse All</button>
+            <br>
+            <input type="checkbox" onchange="onlyFailedTests(this.checked)" checked>Only Failed Tests
+        </summary>
+    </details>
+
+    <div class="content">
+        $BODY$
+    </div>
+</body>
+
+<script type="text/javascript">
+    function getOperations() { return document.querySelectorAll('div.content details.operation') }
+    function getSimpleLines() { return document.querySelectorAll('div.content div.log-entry') }
+    function getErrorNodes() { return document.querySelectorAll('div.content details.operation.error') }
+    function getAllTextNodes() { return document.querySelectorAll('div.content .log-entry') }
+    function setVisibility(collection, visibility) {
+        for (var x of collection)
+            if (visibility(x)) x.classList.remove('hidden');
+            else x.classList.add('hidden')
+    }
+    function expandAll() { for (var x of getOperations()) x.open = true }
+    function collapseAll() { for (var x of getOperations()) x.open = undefined }
+    function expandFailures() { for (var x of getErrorNodes()) expandAllParents(x) }
+    function expandAllParents(node) { for (var x = node; x; x = x.parentNode) expandNode(x) }
+    function expandNode(node) {
+        if (node.localName !== 'details') return;
+        node.open = true;
+        node.classList.remove('hidden');
+    }
+    function changeVisibility(selector, shown) {
+        const rule = Array.from(document.styleSheets[1].cssRules).find(x => x.selectorText.includes(selector));
+        if (rule) {
+            if (shown) rule.style.removeProperty('display');
+            else rule.stype.display = 'none';
+        } else {
+            document.styleSheets[1].insertRule(selector + ' { display: none }')
+        }
+    }
+    function logLevelVisibility(status, shown) { changeVisibility('.' + status.toLowerCase(), shown) }
+    function categoryVisibility(category, shown) { changeVisibility('.' + category.toLowerCase(), shown) }
+    function hasText(node, textLowerCase) { return node.innerText.toLowerCase().includes(textLowerCase) }
+    function onlyFailedTests(shown) { changeVisibility('.test-not-failed', !shown) }
+    function filterByText(filter) {
+        var nodes = getAllTextNodes();
+        setVisibility(nodes, () => true);
+        expandAll();
+        var f = filter ? filter.trim().toLowerCase() : null
+        setVisibility(nodes, x => !filter || hasText(x, f))
+    }
+    function enrichMoreInfo() {
+        document.querySelectorAll('div.content div,more-info'.forEach(x => {
+            a.addEventListener('mouseenter', function enrich() {
+                hljs.highlightBlock(x);
+                if (x.innerHTML.split('\\n').length > 20)
+                    x.innerHTML = '<button onclick="changeCompactView(this)">Expand</button>' + x.innerHTML;
+                x.removeEventListener('mouseenter', enrich);
+            })
+        }))
+    }
+    function changeCompactView(button) {
+        button.pareneElement.classList.toggle('compact');
+        button.innerHTML = button.innerHTML.includes('Expand') ? 'Compact' : 'Expand';
+    }
+    function addFiltersByCategories() {
+        var categories = {};
+        var topBar = document.querySelector('details.topbar');
+        document.querySelectorAll('div.content .log-entry').forEach(x => {
+            const category = [...x.classList].find(c => c.startsWith('category-'));
+            if (category) categories[category] = categories[category] ? categories[category] + 1 : 1
+        })
+        topBar.innerHTML += '<b>Types:</b>';
+        for (const x of ['SUCCESS', 'SKIPPED', 'ERROR', 'WARN', 'LOG', 'DEBUG']) {
+            const checked = ['SKIPPED', 'DEBUG'].includes(x) ? '>' : ' checked>';
+            topBar.innerHTML += '<input type="checkbox" onchange="logLevelVisibility(\'' + x + '\', this.checked)"' + checked + x;
+        }
+        topBar.innerHTML += '<b>Categories:</b>';
+        for (constc in categories) {
+            const name = c.substring(9) + ' (' + categories[c] + ')'
+            topBar.innerHTML += '<input type="checkbox" onchange="categoryVisibility(\'' + x + '\', this.checked)" checked>' + x;
+        }
+    }
+
+    enrichMoreInfo();
+    addFiltersByCategories();
+    expandFailures()
+</script>
