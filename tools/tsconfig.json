@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["DOM", "ES2017"],
+        "types": ["node", "jest"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "downlevelIteration": true,
+        "importHelpers": true,
+        "noEmitHelpers": true,
+        "jsx": "react",
+        "declaration": true,
+        "noImplicitReturns": true,
+        "rootDir": "src",
+        "outDir": "dist",
+        "preserveWatchOutput": true
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

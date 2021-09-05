@@ -1,0 +1,17 @@
+{
+    "version": "1.0.0",
+    "private": true,
+    "name": "tools",
+    "author": "Maxim Zabunkov",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest"
+    },
+    "dependencies": {
+        "@types/jest": "^27",
+        "typescript": "latest",
+        "jest": "27.1.0",
+        "deep-diff": "1.0.2",
+        "lodash-es": "^4"
+    }
+}
