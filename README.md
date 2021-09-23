@@ -23,14 +23,14 @@ Each commit in this repository will solve single or rarely several step in our p
   * ~~2.4 stub application API to run first test~~
   * ~~2.4.1 handle warnings about missing `act()` from `react-testing`.~~
 
-- **3. Automate first test. Implement `DSL.expect`.**
+- **~~3. Automate first test. Implement `DSL.expect`.~~**
   * ~~3.1 introduce DSL (aka Page Object)~~
   * ~~3.2 design `expect()` API for tests: `Expected<T>`.~~
   * ~~3.3 implement `expect` reading partial state using `enzyme` API~~
     - ~~getState - should read only expected subset of state~~
     - ~~expect - will only asserts mismatches = jest.expect().toMatchObject()~~
     - ~~introduced `expect-utils` with `readState`, `textReader`, `itemsReader` helpers~~
-  * 3.4 automate first test on UI initial state
+  * ~~3.4 automate first test on UI initial state~~
 
 - **4. Simulate user actions.**
   * 4.1 extend application API stub to simulate cats

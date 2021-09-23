@@ -87,10 +87,10 @@ export default function Card(props: CardProps) {
             <CardHeader title={<SearchHighlighter text={props.name} />} subheader={price} />
             <CardMedia className={classes.media} image={props.image?.url || 'no_image.jpg'} />
             <CardContent className={classes.cardContent}>
-                <Typography variant="body1" color="secondary" component="p" className={classes.temperament}>
+                <Typography id="temperament" variant="body1" color="secondary" component="p" className={classes.temperament}>
                     <SearchHighlighter text={props.temperament} />
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography id="description" variant="body2" color="textSecondary" component="p">
                     <SearchHighlighter text={props.description} />
                 </Typography>
             </CardContent>

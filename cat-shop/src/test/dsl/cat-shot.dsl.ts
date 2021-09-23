@@ -1,6 +1,8 @@
 import { ReactWrapper } from "enzyme";
+import Card from "../../components/card/card";
+import Checkout from "../../components/checkout/checkout";
 import TopBar from "../../components/top-bar/top-bar";
-import { Expected, readState, textReader } from "../tools";
+import { Expected, itemsReader, readState, textReader } from "../tools";
 
 interface CatShopState {
     navBar: NavBarState;
@@ -27,6 +29,9 @@ interface ButtonState {
 
 interface CatCardState {
     title: string;
+    price: string;
+    description: string;
+    temperament: string;
 }
 
 interface CheckoutFormState {
@@ -43,8 +48,23 @@ export class CatShopDsl {
 
     private getState(expected: Expected<CatShopState>): Expected<CatShopState> {
         return {
-            navBar: readState(expected, 'navBar', this.getNavBarState.bind(this))
+            navBar: readState(expected, 'navBar', this.getNavBarState.bind(this)),
+            cats: readState(expected, 'cats', itemsReader(this.root.find(Card), this.getCardState.bind(this))),
+            checkoutForm: readState(expected, 'checkoutForm', this.getCheckoutFormState.bind(this))
         };
+    }
+
+    private getCheckoutFormState(expected: Expected<CheckoutFormState>): Expected<CheckoutFormState> {
+        return this.root.find(Checkout).exists() ? {} : null;
+    }
+
+    private getCardState(card: ReactWrapper<any, any>, expected: Expected<CatCardState>): Expected<CatCardState> {
+        return {
+            title: readState(expected, 'title', textReader(card.find('span.MuiCardHeader-title'))),
+            price: readState(expected, 'price', textReader(card.find('span.MuiCardHeader-subheader'))),
+            temperament: readState(expected, 'temperament', textReader(card.find({ id: 'temperament' }).first())),
+            description: readState(expected, 'description', textReader(card.find({ id: 'description' }).first())),
+        }
     }
 
     private getNavBarState(expected: Expected<NavBarState>): Expected<NavBarState> {

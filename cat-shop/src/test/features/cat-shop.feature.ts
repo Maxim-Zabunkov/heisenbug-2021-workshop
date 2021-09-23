@@ -10,8 +10,8 @@ describe('[Cat Shop]', () => {
         app = userOpensApplication();
         app.expect({
             navBar: {
-                title: 'Wellcome',
-                search: { text: '', placeholder: 'Search...' },
+                title: 'Welcome',
+                search: { text: '', placeholder: 'Search…' },
                 cartIcon: { disabled: true }
             },
             cats: [],
