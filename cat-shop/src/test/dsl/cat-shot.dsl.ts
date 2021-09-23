@@ -2,7 +2,7 @@ import { ReactWrapper } from "enzyme";
 import Card from "../../components/card/card";
 import Checkout from "../../components/checkout/checkout";
 import TopBar from "../../components/top-bar/top-bar";
-import { Expected, itemsReader, readState, textReader } from "../tools";
+import { Expected, expectState, itemsReader, readState, textReader } from "../tools";
 
 interface CatShopState {
     navBar: NavBarState;
@@ -42,11 +42,12 @@ export class CatShopDsl {
     constructor(private root: ReactWrapper) {
     }
 
-    expect(expected: Expected<CatShopState>): void {
-        expect(this.getState(expected)).toMatchObject(expected as object);
+    expect(expected: Expected<CatShopState>): Promise<void> {
+        return expectState('ui', expected, this.getState.bind(this));
     }
 
     private getState(expected: Expected<CatShopState>): Expected<CatShopState> {
+        this.root.update();
         return {
             navBar: readState(expected, 'navBar', this.getNavBarState.bind(this)),
             cats: readState(expected, 'cats', itemsReader(this.root.find(Card), this.getCardState.bind(this))),

@@ -8,7 +8,7 @@ describe('[Cat Shop]', () => {
 
     test('initial state when application started', () => act(async () => {
         app = userOpensApplication();
-        app.expect({
+        await app.expect({
             navBar: {
                 title: 'Welcome',
                 search: { text: '', placeholder: 'Search…' },
@@ -28,8 +28,12 @@ describe('[Cat Shop]', () => {
             { name: 'cat 2', description: 'about cat 2', price: 321 },
             { name: 'a cat 3', description: 'about cat 3', price: 222 },
         ));
-        app.expect({
-            cats: [{}, {}, {}]
+        await app.expect({
+            cats: [
+                { title: 'the cat 1', description: 'about cat 1', price: '$123' },
+                { title: 'cat 2', description: 'about cat 2', price: '$321' },
+                { title: 'a cat 3', description: 'about cat 3', price: '$222' },
+            ]
         });
     }));
 

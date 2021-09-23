@@ -6,6 +6,12 @@ export type Expected<T> = {
 
 type StateReader<T> = (expected: Expected<T>) => Expected<T>;
 
+export async function expectState<T>(name: string, expected: Expected<T>, getState: StateReader<T>): Promise<void> {
+    // allow application to finish pending tasks in Event loop
+    await new Promise(resolve => queueMicrotask(resolve as any));
+    expect({ [name]: getState(expected) }).toMatchObject({ [name]: expected });
+}
+
 export function readState<T extends object, K extends keyof T>(
     expected: Expected<T>, key: K, reader: StateReader<T[K]>
 ): Expected<T[K]> | undefined {
