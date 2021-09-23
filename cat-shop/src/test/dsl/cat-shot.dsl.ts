@@ -31,11 +31,15 @@ interface CheckoutFormState {
     title: string;
 }
 
+export type Expected<T> = {
+    [K in keyof T]?: T[K] extends object ?Expected<T[K]> : T[K] | null;
+} | null;
+
 export class CatShopDsl {
     constructor(private root: ReactWrapper) {
     }
 
-    expect(expected: CatShopState): void {
+    expect(expected: Expected<CatShopState>): void {
         throw new Error('Not implemented');
     }
 }

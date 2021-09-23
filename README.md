@@ -25,7 +25,7 @@ Each commit in this repository will solve single or rarely several step in our p
 
 - **3. Automate first test. Implement `DSL.expect`.**
   * ~~3.1 introduce DSL (aka Page Object)~~
-  * 3.2 design `expect()` API for tests
+  * ~~3.2 design `expect()` API for tests: `Expected<T>`.~~
   * 3.3 implement `expect` reading partial state using `enzyme` API
   * 3.4 automate first test on UI initial state
 
