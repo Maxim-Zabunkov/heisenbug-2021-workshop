@@ -1,19 +1,21 @@
 import createSagaMiddleware from "@redux-saga/core";
 import { mount } from "enzyme";
-import { createStore, applyMiddleware } from "redux";
-import { AppApi, CatInfo } from "../../api/contracts";
-import { createAppAPi } from "../../api/create-app-api";
+import { applyMiddleware, createStore } from "redux";
+import { CatInfo } from "../../api/contracts";
 import { AppComponent } from "../../create-app-component";
 import { rootSaga } from "../../sagas/root.saga";
 import { rootReducer } from "../../slices/root.reducer";
+import { createMockApi } from "./api-mock";
 import { CatShopDsl } from "./cat-shot.dsl";
+
+export { mockCats } from './api-mock';
 
 export type UiApi = ReturnType<typeof userOpensApplication>;
 
-export function userOpensApplication() {
+export function userOpensApplication(cats?: CatInfo[]) {
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
-    const api = createMockAPi([]);
+    const api = createMockApi(cats);
     const root = mount(<AppComponent store={store} />)
     const sagaTask = sagaMiddleware.run(rootSaga, api);
 
@@ -24,11 +26,3 @@ export function userOpensApplication() {
         }
     });
 }
-
-function createMockAPi(cats: CatInfo[]): AppApi {
-    return {
-        getCats: async () => cats,
-        placeOrder: async () => ({ orderId: 123, status: true })
-    }
-}
-

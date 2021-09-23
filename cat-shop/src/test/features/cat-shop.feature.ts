@@ -1,5 +1,5 @@
 import { act } from "react-dom/test-utils";
-import { UiApi, userOpensApplication } from "../dsl";
+import { mockCats, UiApi, userOpensApplication } from "../dsl";
 
 describe('[Cat Shop]', () => {
     let app: UiApi;
@@ -19,8 +19,19 @@ describe('[Cat Shop]', () => {
         });
     }));
 
+    // Blocked: need Mock API
     test.todo('should request cats data from server');
-    test.todo('should show cat cards when data loaded');
+
+    test('should show cat cards when data loaded', () => act(async () => {
+        app = userOpensApplication(mockCats(
+            { name: 'the cat 1', description: 'about cat 1', price: 123 },
+            { name: 'cat 2', description: 'about cat 2', price: 321 },
+            { name: 'a cat 3', description: 'about cat 3', price: 222 },
+        ));
+        app.expect({
+            cats: [{}, {}, {}]
+        });
+    }));
 
     test.todo('should filter cats by entering search');
     test.todo('should show all cats when search removed');

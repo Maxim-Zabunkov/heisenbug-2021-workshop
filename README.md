@@ -33,7 +33,7 @@ Each commit in this repository will solve single or rarely several step in our p
   * ~~3.4 automate first test on UI initial state~~
 
 - **4. Simulate user actions.**
-  * 4.1 extend application API stub to simulate cats
+  * ~~4.1 extend application API stub to simulate cats~~
   * 4.2 design user actions API for tests
   * 4.3 DSL: implement user actions using `enzyme` API
   * 4.4 automate more tests
