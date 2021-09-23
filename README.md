@@ -17,7 +17,7 @@ Each commit in this repository will solve single or rarely several step in our p
     - ~~installed `jest@26`, `enzyme`, `enzyme-adpater-react-16`, etc.~~
     - ~~added `jest.config.js`, `tsconfig.test.json`.~~
     - ~~confiured `enzyme` adapter in `setup-jest.js`.~~ 
-  * 2.2 start designing first test API
+  * ~~2.2 start designing first test API~~
   * 2.3 mount DEMO application in testing env: `enzyme.mount()`
   * 2.4 stub application API to run first test
 
