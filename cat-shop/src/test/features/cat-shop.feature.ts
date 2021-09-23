@@ -1,3 +1,4 @@
+import { act } from "react-dom/test-utils";
 import { UiApi, userOpensApplication } from "../dsl";
 
 describe('[Cat Shop]', () => {
@@ -5,7 +6,7 @@ describe('[Cat Shop]', () => {
 
     afterEach(() => app?.dispose());
 
-    test('initial state when application started', () => {
+    test('initial state when application started', () => act(async () => {
         app = userOpensApplication();
         app.expect({
             navBar: {
@@ -16,7 +17,7 @@ describe('[Cat Shop]', () => {
             cats: [],
             checkoutForm: null
         });
-    });
+    }));
 
     test.todo('should request cats data from server');
     test.todo('should show cat cards when data loaded');

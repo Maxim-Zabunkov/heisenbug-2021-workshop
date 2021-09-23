@@ -21,6 +21,7 @@ Each commit in this repository will solve single or rarely several step in our p
   * ~~2.3 mount DEMO application in testing env: `enzyme.mount()`.~~
   * ~~2.3.1 handle import from `*.css` files: add `style-file-mock.js`, setup it in `jest.config.js`.~~
   * ~~2.4 stub application API to run first test~~
+  * ~~2.4.1 handle warnings about missing `act()` from `react-testing`.~~
 
 - **3. Automate first test. Implement `DSL.expect`.**
   * 3.1 design `expect()` API for tests
