@@ -35,8 +35,8 @@ Each commit in this repository will solve single or rarely several step in our p
 - **4. Simulate user actions.**
   * ~~4.1 extend application API stub to simulate cats~~
   * ~~4.1.1 resolve race condition: our tests run faster than application: wait for pending tasks in event loop. Then call `enzyme.update()` on root~~
-  * 4.2 design user actions API for tests
-  * 4.3 DSL: implement user actions using `enzyme` API
+  * ~~4.2 design user actions API for tests~~
+  * ~~4.3 DSL: implement user actions using `enzyme` API~~
   * 4.4 automate more tests
 
 - **5. Introduce `MockUtils` to control mocks from tests.**

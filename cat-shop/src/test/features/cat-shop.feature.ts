@@ -37,8 +37,30 @@ describe('[Cat Shop]', () => {
         });
     }));
 
-    test.todo('should filter cats by entering search');
-    test.todo('should show all cats when search removed');
+    test('should filter cats by entering search', () => act(async () => {
+        app = userOpensApplication(mockCats(
+            { name: 'the cat 1', description: 'about cat 1', price: 123 },
+            { name: 'cat 2', description: 'about cat 2', price: 321 },
+            { name: 'a cat 3', description: 'about cat 3', price: 222 },
+        ));
+        await app.expect({cats: [{}, {}, {}]});
+
+        app.navBar.search.type('2');
+        await app.expect({
+            cats: [
+                { title: 'cat 2', description: 'about cat 2', price: '$321' },
+            ]
+        });
+
+        app.navBar.search.type('');
+        await app.expect({
+            cats: [
+                { title: 'the cat 1', description: 'about cat 1', price: '$123' },
+                { title: 'cat 2', description: 'about cat 2', price: '$321' },
+                { title: 'a cat 3', description: 'about cat 3', price: '$222' },
+            ]
+        });
+    }));
 
     test.todo('should add / remove cats to cart');
     test.todo('should NOT be able to add more than 5 different cats');

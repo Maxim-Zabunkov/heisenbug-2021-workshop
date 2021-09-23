@@ -2,7 +2,7 @@ import { ReactWrapper } from "enzyme";
 import Card from "../../components/card/card";
 import Checkout from "../../components/checkout/checkout";
 import TopBar from "../../components/top-bar/top-bar";
-import { Expected, expectState, itemsReader, readState, textReader } from "../tools";
+import { Expected, expectState, itemsReader, readState, simulateInputChange, textReader } from "../tools";
 
 interface CatShopState {
     navBar: NavBarState;
@@ -39,6 +39,12 @@ interface CheckoutFormState {
 }
 
 export class CatShopDsl {
+    readonly navBar = {
+        search: {
+            type: (text: string) => simulateInputChange(this.root.find(TopBar).find('input[id="search"]'), text)
+        }
+    }
+    
     constructor(private root: ReactWrapper) {
     }
 
