@@ -9,8 +9,8 @@ Each commit in this repository will solve single or rarely several step in our p
 
 ### Here is our initial plan
 
-- **1. Take a look at DEMO application. Capture reauirements.**
-  * 1.1 Write requirements in `feature.ts` files
+- **~~1. Take a look at DEMO application. Capture reauirements.~~**
+  * ~~1.1 Write requirements in `feature.ts` files~~
 
 - **2. Setup testing infrastructure.**
   * 2.1 install `jest, enzyme` and configure
