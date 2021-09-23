@@ -1,6 +1,12 @@
+import { UiApi, userOpensApplication } from "../dsl";
+
 describe('[Cat Shop]', () => {
+    let app: UiApi;
+
+    afterEach(() => app?.dispose());
+
     test('initial state when application started', () => {
-        const app = userOpensApplication();
+        app = userOpensApplication();
         app.expect({
             navBar: {
                 title: 'Wellcome',
