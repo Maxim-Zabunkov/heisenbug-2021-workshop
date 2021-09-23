@@ -104,7 +104,7 @@ export default function TopBar(props: TopBarProps) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography className={classes.title} variant="h6" noWrap>
+            <Typography className={classes.title} variant="h6" noWrap id="title">
               Welcome
             </Typography>
             <div className={classes.search}>
@@ -112,6 +112,7 @@ export default function TopBar(props: TopBarProps) {
                 <SearchIcon />
               </div>
               <InputBase
+                  id="search"
                   placeholder="Search…"
                   classes={{
                     root: classes.inputRoot,
@@ -122,6 +123,7 @@ export default function TopBar(props: TopBarProps) {
               />
             </div>
             <IconButton
+                id="cart"
                 className={ classes.shoppingCartButton }
                 disabled={ !numberOfPurchases }
                 aria-label="display more actions"
