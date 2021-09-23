@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SerachHighlighter should split text onto parts 1`] = `
+Array [
+  Object {
+    "text": "Hello My ",
+  },
+  Object {
+    "highlight": true,
+    "text": "Fri",
+  },
+  Object {
+    "text": "end",
+  },
+]
+`;

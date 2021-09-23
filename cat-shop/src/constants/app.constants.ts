@@ -1,0 +1,1 @@
+export const MAX_COUNT_OF_PURCHASES: number = 5;
