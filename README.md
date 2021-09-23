@@ -19,6 +19,7 @@ Each commit in this repository will solve single or rarely several step in our p
     - ~~confiured `enzyme` adapter in `setup-jest.js`.~~ 
   * ~~2.2 start designing first test API~~
   * ~~2.3 mount DEMO application in testing env: `enzyme.mount()`.~~
+  * ~~2.3.1 handle import from `*.css` files: add `style-file-mock.js`, setup it in `jest.config.js`.~~
   * 2.4 stub application API to run first test
 
 - **3. Automate first test. Implement `DSL.expect`.**

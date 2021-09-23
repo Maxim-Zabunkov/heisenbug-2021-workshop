@@ -11,6 +11,9 @@ module.exports= {
     testMatch: [
         '**/src/**/*.(spec|test|feature).ts?(x)'
     ],
+    moduleNameMapper: {
+        '\\.(css)$': '<rootDir>/src/test/style-file-mock.js'
+    },
     globals: {
         'ts-jest': {
             tsconfig: 'tsconfig.test.json',
