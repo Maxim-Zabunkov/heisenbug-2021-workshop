@@ -12,7 +12,7 @@ Each commit in this repository will solve single or rarely several step in our p
 - **~~1. Take a look at DEMO application. Capture reauirements.~~**
   * ~~1.1 Write requirements in `feature.ts` files~~
 
-- **2. Setup testing infrastructure.**
+- **~~2. Setup testing infrastructure.~~**
   * ~~2.1 install `jest, enzyme` and configure~~
     - ~~installed `jest@26`, `enzyme`, `enzyme-adpater-react-16`, etc.~~
     - ~~added `jest.config.js`, `tsconfig.test.json`.~~
@@ -24,8 +24,8 @@ Each commit in this repository will solve single or rarely several step in our p
   * ~~2.4.1 handle warnings about missing `act()` from `react-testing`.~~
 
 - **3. Automate first test. Implement `DSL.expect`.**
-  * 3.1 design `expect()` API for tests
-  * 3.2 introduce DSL (aka Page Object)
+  * ~~3.1 introduce DSL (aka Page Object)~~
+  * 3.2 design `expect()` API for tests
   * 3.3 implement `expect` reading partial state using `enzyme` API
   * 3.4 automate first test on UI initial state
 
