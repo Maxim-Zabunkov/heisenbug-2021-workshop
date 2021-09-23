@@ -33,7 +33,7 @@ export default function Review() {
 
     return (
         <React.Fragment>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom id="title">
                 Order summary
             </Typography>
             <List disablePadding>
@@ -42,47 +42,46 @@ export default function Review() {
                 ))}
                 <ListItem className={classes.listItem} key="total">
                     <ListItemText primary="Total" />
-                    <Typography variant="subtitle1" className={classes.total}>
+                    <Typography variant="subtitle1" className={classes.total} id="total-sum">
                         ${totalPrice}
                     </Typography>
                 </ListItem>
             </List>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                    <Typography variant="h6" gutterBottom className={classes.title}>
+                    <Typography variant="h6" gutterBottom className={classes.title} id="shipping-title">
                         Shipping
                     </Typography>
-                    <Typography gutterBottom>John Smith</Typography>
-                    <Typography gutterBottom>{Object.values(addressDetails).join(', ')}</Typography>
+                    <Typography gutterBottom id="shipping-text">{Object.values(addressDetails).join(', ')}</Typography>
                 </Grid>
                 <Grid item container direction="column" xs={12} sm={6}>
-                    <Typography variant="h6" gutterBottom className={classes.title}>
+                    <Typography variant="h6" gutterBottom className={classes.title} id="payment-title">
                         Payment details
                     </Typography>
-                    <Grid container>
+                    <Grid container id="payment-content">
                         <React.Fragment>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} id="field">
                                 <Typography gutterBottom>Card Type</Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} id="value">
                                 <Typography gutterBottom>VISA</Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} id="field">
                                 <Typography gutterBottom>Name</Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} id="value">
                                 <Typography gutterBottom>{paymentDetails.cardName}</Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} id="field">
                                 <Typography gutterBottom>Card Number</Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} id="value">
                                 <Typography gutterBottom>{paymentDetails.cardNumber}</Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} id="field">
                                 <Typography gutterBottom>Expiry Date</Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={6} id="value">
                                 <Typography gutterBottom>{paymentDetails.expiryDate}</Typography>
                             </Grid>
                         </React.Fragment>

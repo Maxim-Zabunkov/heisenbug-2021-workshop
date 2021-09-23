@@ -97,6 +97,7 @@ export default function Card(props: CardProps) {
             <CardActions disableSpacing className={classes.actionContainer}>
                 {showShoppingCart &&
                     <IconButton
+                        id="cart-icon"
                         aria-label="add to favorites"
                         onClick={addPurchaseCallback}
                         disabled={isAddButtonDisabled}
@@ -107,6 +108,7 @@ export default function Card(props: CardProps) {
                 {!showShoppingCart &&
                     <>
                         <Fab
+                            id="add-icon"
                             size="small"
                             color="primary"
                             aria-label="add"
@@ -116,6 +118,7 @@ export default function Card(props: CardProps) {
                             <AddIcon />
                         </Fab>
                         <Typography
+                            id="quantity"
                             className={classes.actionText}
                             variant="overline"
                             display="block"
@@ -123,7 +126,7 @@ export default function Card(props: CardProps) {
                         >
                             {countOfPurchases} cats
                         </Typography>
-                        <Fab size="small" color="primary" aria-label="remove" onClick={removePurchaseCallback}>
+                        <Fab id="remove-icon" size="small" color="primary" aria-label="remove" onClick={removePurchaseCallback}>
                             <RemoveIcon />
                         </Fab>
                     </>

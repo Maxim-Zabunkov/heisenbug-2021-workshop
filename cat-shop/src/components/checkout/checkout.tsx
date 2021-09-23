@@ -119,7 +119,7 @@ export default function Checkout(props: CheckoutProps) {
                 <CssBaseline />
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        <Typography component="h1" variant="h4" align="center">
+                        <Typography component="h1" variant="h4" align="center" id="title">
                             Checkout
                         </Typography>
                         <Stepper activeStep={activeStep} className={classes.stepper}>
@@ -133,11 +133,12 @@ export default function Checkout(props: CheckoutProps) {
                         {steps.length > activeStep &&
                             <div className={classes.buttons}>
                                 {isBackShown && (
-                                    <Button onClick={handleBack} className={classes.button}>
+                                    <Button id="back" onClick={handleBack} className={classes.button}>
                                         Back
                                     </Button>
                                 )}
                                 <Button
+                                    id="next"
                                     variant="contained"
                                     color="primary"
                                     onClick={handleNext}

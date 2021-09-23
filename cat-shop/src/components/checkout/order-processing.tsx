@@ -22,10 +22,10 @@ export function OrderProcessing(): JSX.Element {
     </div>;
   }
   return <React.Fragment>
-    <Typography variant="h5" gutterBottom>
+    <Typography variant="h5" gutterBottom id="title">
       Thank you for your order.
     </Typography>
-    <Typography variant="subtitle1">
+    <Typography variant="subtitle1" id="text">
       Your order number is <b>#{orderId}</b>.<br/>
       We have emailed your order confirmation, and will
       send you an update when your order has shipped.

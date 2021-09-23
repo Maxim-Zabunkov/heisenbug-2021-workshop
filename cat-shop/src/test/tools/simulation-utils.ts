@@ -1,6 +1,14 @@
 import { ReactWrapper } from "enzyme";
 
-export function simulateInputChange(input: ReactWrapper, value: string) {
+export function simulateClick(control: ReactWrapper): void {
+    if (!control.exists())
+        throw new Error('simulateClick: element is not shown.');
+    if (control.prop('disabled'))
+        throw new Error(`simulateClick: element is disabled`);
+    control.simulate('click');
+}
+
+export function simulateInputChange(input: ReactWrapper, value: string): void {
     if (!input.exists())
         throw new Error('simulateInputChange: input element is not shown.');
     if (input.type() !== 'input')

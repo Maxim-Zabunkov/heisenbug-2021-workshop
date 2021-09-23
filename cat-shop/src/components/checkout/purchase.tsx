@@ -48,16 +48,16 @@ export function Purchase(props: PurchaseProps): JSX.Element {
     }
     return (
         <ListItem className={classes.listItem} key={purchase.id}>
-            <ListItemText primary={(index + 1) + '. ' + purchase.name} />
-            {!readonly && <Fab size="small" color="primary" aria-label="add" onClick={add}>
+            <ListItemText id="text" primary={(index + 1) + '. ' + purchase.name} />
+            {!readonly && <Fab size="small" color="primary" aria-label="add" onClick={add} id="add">
                 <AddIcon />
             </Fab>}
-            <Typography className={classes.count} variant="body2">{`${count}`}</Typography>
-            {!readonly && <Fab size="small" color="primary" aria-label="add" onClick={remove}>
+            <Typography className={classes.count} variant="body2" id="count">{`${count}`}</Typography>
+            {!readonly && <Fab size="small" color="primary" aria-label="add" onClick={remove} id="remove">
                 <RemoveIcon />
             </Fab>}
-            <Typography className={classes.price} variant="body2">{`$${purchase.price}`}</Typography>
-            <Typography className={classes.price} variant="body2">{`$${purchase.price * count}`}</Typography>
+            <Typography className={classes.price} variant="body2" id="price">{`$${purchase.price}`}</Typography>
+            <Typography className={classes.price} variant="body2" id="total">{`$${purchase.price * count}`}</Typography>
         </ListItem>
     );
 }

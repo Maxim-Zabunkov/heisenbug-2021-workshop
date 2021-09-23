@@ -32,12 +32,16 @@ Each commit in this repository will solve single or rarely several step in our p
     - ~~introduced `expect-utils` with `readState`, `textReader`, `itemsReader` helpers~~
   * ~~3.4 automate first test on UI initial state~~
 
-- **4. Simulate user actions.**
+- **~~4. Simulate user actions.~~**
   * ~~4.1 extend application API stub to simulate cats~~
   * ~~4.1.1 resolve race condition: our tests run faster than application: wait for pending tasks in event loop. Then call `enzyme.update()` on root~~
   * ~~4.2 design user actions API for tests~~
   * ~~4.3 DSL: implement user actions using `enzyme` API~~
-  * 4.4 automate more tests
+  * ~~4.4 automate more tests~~
+    - ~~simulating more user actions using `simulation-utils` API,~~
+    - ~~reading more state in `CatShopDsl`,~~
+    - ~~assigning ids in React components to easy finding~~
+    - ~~automate all unblocked tests~~
 
 - **5. Introduce `MockUtils` to control mocks from tests.**
   * 5.1 design Mocks API for tests

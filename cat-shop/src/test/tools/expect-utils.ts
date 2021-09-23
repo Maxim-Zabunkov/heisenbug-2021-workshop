@@ -42,7 +42,9 @@ export function itemsReader<T>(
         if (expected && items.length !== expected.length)
             return `Array size mismatch. Expected ${expected.length}, but was ${items.length}` as any;
         return items.map((item, i) => {
-            const expectedItem = expected ? expected[i] ?? null : null;
+            const expectedItem = expected && expected[i];
+            if (expectedItem === undefined)
+                return undefined;
             return itemReader(item, expectedItem);
         });
     }

@@ -44,7 +44,7 @@ export default function PaymentForm() {
 
     return (
         <React.Fragment>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom id="title">
                 Payment method
             </Typography>
             <Grid container spacing={3}>

@@ -29,7 +29,7 @@ export default function Cart() {
 
     return (
         <React.Fragment>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom id="title">
                 Cart
             </Typography>
             <List disablePadding>
@@ -38,7 +38,7 @@ export default function Cart() {
                 ))}
                 <ListItem className={classes.listItem} key="total">
                     <ListItemText primary="Total" />
-                    <Typography variant="subtitle1" className={classes.total}>
+                    <Typography variant="subtitle1" className={classes.total} id="total-sum">
                         ${totalPrice}
                     </Typography>
                 </ListItem>
