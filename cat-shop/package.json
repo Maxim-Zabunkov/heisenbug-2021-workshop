@@ -26,6 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "component-test": "jest features",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -45,5 +46,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/enzyme": "^3",
+    "@types/jest": "^26",
+    "enzyme": "^3",
+    "enzyme-adapter-react-16": "latest",
+    "jest": "^26",
+    "ts-jest": "^26"
   }
 }
