@@ -27,7 +27,7 @@ export function readState<T extends object, K extends keyof T>(
 }
 
 export function getText(control: ReactWrapper<any, any>): string | null {
-    return control.exists() ? control.text() : null;
+    return control.exists() ? control.text().replace(/\s/g, ' ').trim() : null;
 }
 
 export function textReader(control: ReactWrapper<any, any>): StateReader<string> {

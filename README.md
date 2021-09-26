@@ -42,6 +42,9 @@ Each commit in this repository will solve single or rarely several step in our p
     - ~~reading more state in `CatShopDsl`,~~
     - ~~assigning ids in React components to easy finding~~
     - ~~automate all unblocked tests~~
+    - ~~fixed PROD bug: disable Next button if no cats remaining in the cart~~
+    - ~~fixed issue in `getText`: replacing different space symbols~~
+    - ~~`simulateInputChange`: should change the DOM element value before firing `change` event~~
 
 - **5. Introduce `MockUtils` to control mocks from tests.**
   * 5.1 design Mocks API for tests

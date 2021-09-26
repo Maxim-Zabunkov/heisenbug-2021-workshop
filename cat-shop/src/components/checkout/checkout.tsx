@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../configure-store";
 import { isAddressFormFilled as isAddressDetailsFormFilled } from '../../selectors/address-details-selector';
 import { isPaymentDetailsFormFilled } from '../../selectors/payment-details-selector';
+import { selectPurchases } from "../../selectors/purchase-selector";
 import { selectOrderInfo } from "../../selectors/review-details-selector";
 import AddressForm from './address-form';
 import Cart from "./cart";
@@ -82,13 +83,16 @@ function getStepContent(step: number) {
 export default function Checkout(props: CheckoutProps) {
     const classes = useStyles();
 
+    const purchases = useSelector(selectPurchases);
     const step1done = useSelector(isAddressDetailsFormFilled);
     const step2done = useSelector(isPaymentDetailsFormFilled);
     const [activeStep, setActiveStep] = React.useState(0);
 
     const isLastPage = activeStep === steps.length - 1;
     const isBackShown = activeStep !== 0;
-    const isNextButtonDisabled = (!step1done && activeStep === 1) || (!step2done && activeStep === 2);
+    const isNextButtonDisabled = (!purchases.length && activeStep === 0) ||
+        (!step1done && activeStep === 1) ||
+        (!step2done && activeStep === 2);
     const nextButtonText = isLastPage ? 'Place Order' : 'Next';
 
     const orderInfo = useSelector(selectOrderInfo);

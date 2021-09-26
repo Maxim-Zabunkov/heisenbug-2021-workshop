@@ -15,5 +15,6 @@ export function simulateInputChange(input: ReactWrapper, value: string): void {
         throw new Error(`simulateInputChange: invalid element: expected <input/>, but was ${input.type()}`);
     if (input.getDOMNode<HTMLInputElement>().disabled)
         throw new Error(`simulateInputChange: input element is disabled`);
+    input.getDOMNode<HTMLInputElement>().value = value;
     input.simulate('change', { target: { value } });
 }
