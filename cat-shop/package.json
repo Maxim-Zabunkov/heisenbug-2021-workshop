@@ -53,6 +53,7 @@
     "enzyme": "^3",
     "enzyme-adapter-react-16": "latest",
     "jest": "^26",
-    "ts-jest": "^26"
+    "ts-jest": "^26",
+    "rxjs": "^6"
   }
 }
