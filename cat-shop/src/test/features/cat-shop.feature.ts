@@ -1,13 +1,17 @@
 import { act } from "react-dom/test-utils";
-import { mockCats, UiApi, userOpensApplication } from "../dsl";
+import { MockApi, mockCats, UiApi, userOpensApplication } from "../dsl";
 
 describe('[Cat Shop]', () => {
     let app: UiApi;
+    let mock: MockApi;
+
+    beforeEach(() => {
+        [app, mock] = userOpensApplication()
+    });
 
     afterEach(() => app?.dispose());
 
     test('initial state when application started', () => act(async () => {
-        app = userOpensApplication();
         await app.expect({
             navBar: {
                 title: 'Welcome',
@@ -23,7 +27,7 @@ describe('[Cat Shop]', () => {
     test.todo('should request cats data from server');
 
     test('should show cat cards when data loaded', () => act(async () => {
-        app = userOpensApplication(mockCats(
+        mock.getCats.setup(mockCats(
             { name: 'the cat 1', description: 'about cat 1', price: 123 },
             { name: 'cat 2', description: 'about cat 2', price: 321 },
             { name: 'a cat 3', description: 'about cat 3', price: 222 },
@@ -38,7 +42,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('should filter cats by entering search', () => act(async () => {
-        app = userOpensApplication(mockCats(
+        mock.getCats.setup(mockCats(
             { name: 'the cat 1', description: 'about cat 1', price: 123 },
             { name: 'cat 2', description: 'about cat 2', price: 321 },
             { name: 'a cat 3', description: 'about cat 3', price: 222 },
@@ -63,7 +67,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('should add / remove cats to cart', () => act(async () => {
-        app = userOpensApplication(mockCats(
+        mock.getCats.setup(mockCats(
             { name: 'the cat 1', description: 'about cat 1', price: 123 },
             { name: 'cat 2', description: 'about cat 2', price: 321 },
             { name: 'a cat 3', description: 'about cat 3', price: 222 },
@@ -87,7 +91,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('should NOT be able to add more than 5 different cats', () => act(async () => {
-        app = userOpensApplication(mockCats(6));
+        mock.getCats.setup(mockCats(6));
         await app.expect({ cats: new Array(6) });
 
         for (let i = 0; i < 5; i++)
@@ -99,7 +103,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('Cart page: check initial state', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -122,7 +126,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('Cart page: user should be able to change cats count', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -177,7 +181,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('Shipping Address page: check initial state', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -206,7 +210,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('Shipping Address page: when user populates all required fields, Next button should unlock', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -244,7 +248,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('Payment Details page: check initial state', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -275,7 +279,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('Payment Details page: when user populates all required fields, Next button should unlock', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -312,7 +316,7 @@ describe('[Cat Shop]', () => {
     }));
 
     test('Order summary page: check state', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -360,7 +364,7 @@ describe('[Cat Shop]', () => {
 
     // Blocked: need Mocks API
     xtest('Place Order: check place request', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -401,13 +405,13 @@ describe('[Cat Shop]', () => {
     test.todo('Place Order: handle reject response');
 
     test('Checkout form: should disappear when user click outside', () => act(async () => {
-        app = userOpensApplication(mockCats({ name: 'my cat', price: 123 }));
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
         app.navBar.cartIcon.click();
         await app.expect({ checkoutForm: { cartPage: {}, nextButton: { text: 'Next', disabled: false } } });
-     
+
         app.checkoutForm.clickOutside();
         await app.expect({ checkoutForm: null });
     }));

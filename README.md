@@ -49,7 +49,7 @@ Each commit in this repository will solve single or rarely several step in our p
 - **5. Introduce `MockUtils` to control mocks from tests.**
   * ~~5.1 design Mocks API for tests~~
   * ~~5.2 implement MockUtils~~
-  * 5.3 integrate MockUtils in tests instead of stubs
+  * ~~5.3 integrate MockUtils in tests instead of stubs~~
   * 5.4 automate blocked tests
 
 - **6. Collect code coverage. Examine our tests.**

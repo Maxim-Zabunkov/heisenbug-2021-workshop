@@ -1,10 +1,11 @@
 import { CatInfo, AppApi } from "../../api/contracts";
+import { ApiMock, MockUtils } from "../tools/mock-utils";
 
 export function createMockApi(cats: CatInfo[] = []): AppApi {
     return {
-        getCats: async () => cats,
-        placeOrder: async () => ({ orderId: 123, status: true })
-    }
+        getCats: MockUtils.requestMock('getCats'),
+        placeOrder: MockUtils.requestMock('placeOrder')
+    };
 }
 
 let nextCatId = 100;

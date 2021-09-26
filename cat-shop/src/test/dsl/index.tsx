@@ -1,28 +1,33 @@
 import createSagaMiddleware from "@redux-saga/core";
 import { mount } from "enzyme";
 import { applyMiddleware, createStore } from "redux";
-import { CatInfo } from "../../api/contracts";
+import { AppApi, CatInfo } from "../../api/contracts";
 import { AppComponent } from "../../create-app-component";
 import { rootSaga } from "../../sagas/root.saga";
 import { rootReducer } from "../../slices/root.reducer";
+import { ApiMock, MockUtils } from "../tools/mock-utils";
 import { createMockApi } from "./api-mock";
 import { CatShopDsl } from "./cat-shot.dsl";
 
 export { mockCats } from './api-mock';
 
-export type UiApi = ReturnType<typeof userOpensApplication>;
+export type UiApi = CatShopDsl & { dispose(): void };
+export type MockApi = ApiMock<AppApi>;
 
-export function userOpensApplication(cats?: CatInfo[]) {
+export function userOpensApplication(cats?: CatInfo[]): [UiApi, MockApi] {
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
     const api = createMockApi(cats);
     const root = mount(<AppComponent store={store} />)
     const sagaTask = sagaMiddleware.run(rootSaga, api);
 
-    return Object.assign(new CatShopDsl(root), {
+    const uiApi = Object.assign(new CatShopDsl(root), {
         dispose() {
             sagaTask.cancel();
             root.unmount();
+            MockUtils.reset();
         }
     });
+
+    return [uiApi, api as unknown as MockApi];
 }
