@@ -42,7 +42,9 @@ describe('[Cat Shop]', () => {
         });
     }));
 
-    test('should filter cats by entering search', () => act(async () => {
+    test.todo('if a cat has no image, no_image.png should be shown');
+
+    test('Search: should filter cats by entering search', () => act(async () => {
         mock.getCats.setup(mockCats(
             { name: 'the cat 1', description: 'about cat 1', price: 123 },
             { name: 'cat 2', description: 'about cat 2', price: 321 },
@@ -66,6 +68,8 @@ describe('[Cat Shop]', () => {
             ]
         });
     }));
+
+    test.todo('Search: should show cats added to cart regardless search filter');
 
     test('should add / remove cats to cart', () => act(async () => {
         mock.getCats.setup(mockCats(
@@ -125,6 +129,8 @@ describe('[Cat Shop]', () => {
             }
         });
     }));
+
+    test.todo('Cart page: should sort cats alpabetically');
 
     test('Cart page: user should be able to change cats count', () => act(async () => {
         mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
@@ -248,6 +254,9 @@ describe('[Cat Shop]', () => {
         });
     }));
 
+    test.todo('Shipping Address page: when user clicks Back should show Cart page');
+    test.todo('Shipping Address page: populate all fields');
+
     test('Payment Details page: check initial state', () => act(async () => {
         mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
@@ -315,6 +324,9 @@ describe('[Cat Shop]', () => {
             }
         });
     }));
+
+    test.todo('Payment Deatils page: when user clicks Back should show Shipment Address page');
+
 
     test('Order summary page: check state', () => act(async () => {
         mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
@@ -433,6 +445,8 @@ describe('[Cat Shop]', () => {
         });
     }));
 
+    test.todo('Place Order: handle server response with status=false');
+
     test('Place Order: handle reject response', () => act(async () => {
         mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
@@ -478,4 +492,6 @@ describe('[Cat Shop]', () => {
         app.checkoutForm.clickOutside();
         await app.expect({ checkoutForm: null });
     }));
+
+    test.todo('Checkout form: should NOT disapper if user clicks outside during order processing');
 });
