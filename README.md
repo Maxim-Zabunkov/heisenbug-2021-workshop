@@ -46,12 +46,12 @@ Each commit in this repository will solve single or rarely several step in our p
     - ~~fixed issue in `getText`: replacing different space symbols~~
     - ~~`simulateInputChange`: should change the DOM element value before firing `change` event~~
 
-- **5. Introduce `MockUtils` to control mocks from tests.**
+- **~~5. Introduce `MockUtils` to control mocks from tests.~~**
   * ~~5.1 design Mocks API for tests~~
   * ~~5.2 implement MockUtils~~
   * ~~5.3 integrate MockUtils in tests instead of stubs~~
   * ~~5.4 automate blocked tests~~
-    - PROD bug found: Application does not handle placeOrder() reject
+    - ~~PROD bug found: Application does not handle placeOrder() reject~~
 
 - **6. Collect code coverage. Examine our tests.**
   * 6.1 setup `jest` to collect code coverage

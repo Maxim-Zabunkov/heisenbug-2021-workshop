@@ -460,8 +460,8 @@ describe('[Cat Shop]', () => {
             checkoutForm: {
                 orderPage: {
                     hasProgressIndicator: false,
-                    title: 'Error.',
-                    text: 'TBD'
+                    title: 'Something goes wrong.',
+                    text: 'Your order was not submitted due to technical issue.Please try again or contact support center.'
                 }
             }
         });

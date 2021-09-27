@@ -12,6 +12,7 @@ export interface AppState {
 export interface OrderInfo {
     orderId?: number;
     inProgress: boolean;
+    error?: Error;
 }
 
 export interface Search {

@@ -8,9 +8,13 @@ const orderSlice = createSlice({
     reducers: {
         setOrder(state: OrderInfo, action: PayloadAction<OrderInfo>) {
             return action.payload;
+        },
+        setOrderFailed(state: OrderInfo, action: PayloadAction<Error>) {
+            state.error = action.payload;
+            state.inProgress = false;
         }
     },
 });
 
 export default orderSlice.reducer;
-export const { setOrder } = orderSlice.actions;
+export const { setOrder, setOrderFailed } = orderSlice.actions;
