@@ -21,5 +21,16 @@ module.exports= {
             diagnostics: false,
             isolatedModules: true
         }
-    }
+    },
+    collectCoverageFrom: [
+        'src/**/*.{js,jsx,ts,tsx}'
+    ],
+    coverageReporters: [
+        'text-summary',
+        'html'
+    ],
+    coveragePathIgnorePatterns: [
+        '.*\\.spec\\.[jt]s',
+        'src/test'
+    ]
 };
