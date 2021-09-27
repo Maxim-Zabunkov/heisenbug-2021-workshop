@@ -2,6 +2,9 @@ module.exports= {
     setupFiles: [
         '<rootDir>/src/test/setup-jest.js'
     ],
+    setupFilesAfterEnv: [
+        'jest-allure/dist/setup'
+    ],
     moduleFileExtensions: [
         'ts', 'tsx', 'js', 'jsx', 'json', 'node'
     ],
