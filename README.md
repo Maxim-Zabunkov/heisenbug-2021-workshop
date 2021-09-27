@@ -50,7 +50,8 @@ Each commit in this repository will solve single or rarely several step in our p
   * ~~5.1 design Mocks API for tests~~
   * ~~5.2 implement MockUtils~~
   * ~~5.3 integrate MockUtils in tests instead of stubs~~
-  * 5.4 automate blocked tests
+  * ~~5.4 automate blocked tests~~
+    - PROD bug found: Application does not handle placeOrder() reject
 
 - **6. Collect code coverage. Examine our tests.**
   * 6.1 setup `jest` to collect code coverage

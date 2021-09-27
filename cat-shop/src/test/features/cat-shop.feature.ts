@@ -23,8 +23,9 @@ describe('[Cat Shop]', () => {
         });
     }));
 
-    // Blocked: need Mock API
-    test.todo('should request cats data from server');
+    test('should request cats data from server', () => act(async () => {
+        await mock.getCats.expectRequest();
+    }));
 
     test('should show cat cards when data loaded', () => act(async () => {
         mock.getCats.setup(mockCats(
@@ -362,9 +363,8 @@ describe('[Cat Shop]', () => {
         });
     }));
 
-    // Blocked: need Mocks API
-    xtest('Place Order: check place request', () => act(async () => {
-        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
+    test('Place Order: check place request', () => act(async () => {
+        mock.getCats.setup(mockCats({ id:'123', name: 'my cat', price: 123 }));
         await app.expect({ cats: new Array(1) });
         app.cats[0].cartIcon.click();
         await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
@@ -384,12 +384,10 @@ describe('[Cat Shop]', () => {
 
         await app.expect({ checkoutForm: { reviewOrderPage: {}, nextButton: { text: 'Place Order', disabled: false } } });
 
-        // Blocked: need Mocks API
-        // await mock.placeOrder.expectNoRequest();
+        await mock.placeOrder.expectNoRequest();
         app.checkoutForm.nextButton.click();
 
-        // Blocked: need Mocks API
-        // await mock.placeOrder.expectRequest({...});
+        await mock.placeOrder.expectRequest([{ catIds: ['123'] }]);
         await app.expect({
             checkoutForm: {
                 orderPage: {
@@ -401,8 +399,73 @@ describe('[Cat Shop]', () => {
         });
     }));
 
-    test.todo('Place Order: handle success response');
-    test.todo('Place Order: handle reject response');
+    test('Place Order: handle success response', () => act(async () => {
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
+        await app.expect({ cats: new Array(1) });
+        app.cats[0].cartIcon.click();
+        await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
+        app.navBar.cartIcon.click();
+        await app.expect({ checkoutForm: { cartPage: {}, nextButton: { text: 'Next', disabled: false } } });
+        app.checkoutForm.nextButton.click();
+        await app.expect({ checkoutForm: { shippingAddressPage: {}, } });
+        app.checkoutForm.shippingAddressPage.enterFields({
+            firstName: 'Max', lastName: 'Zabunkov', address1: 'Home', city: 'Tosno', country: 'RF', zipCode: '187000'
+        });
+        await app.expect({ checkoutForm: { nextButton: { text: 'Next', disabled: false } } });
+        app.checkoutForm.nextButton.click();
+        await app.expect({ checkoutForm: { paymentDetailsPage: {} } });
+        app.checkoutForm.paymentDetailsPage.enterFields({ cardName: 'Max', cardNumber: '1234 5678', expDate: '10/21', cvv: 'cvv' });
+        await app.expect({ checkoutForm: { paymentDetailsPage: {}, nextButton: { text: 'Next', disabled: false } } });
+        app.checkoutForm.nextButton.click();
+        await app.expect({ checkoutForm: { reviewOrderPage: {}, nextButton: { text: 'Place Order', disabled: false } } });
+
+        app.checkoutForm.nextButton.click();
+
+        await mock.placeOrder.setup({ orderId: 12121212, status: true });
+        await app.expect({
+            checkoutForm: {
+                orderPage: {
+                    hasProgressIndicator: false,
+                    title: 'Thank you for your order.',
+                    text: 'Your order number is #12121212.We have emailed your order confirmation, and will send you an update when your order has shipped.'
+                }
+            }
+        });
+    }));
+
+    test('Place Order: handle reject response', () => act(async () => {
+        mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));
+        await app.expect({ cats: new Array(1) });
+        app.cats[0].cartIcon.click();
+        await app.expect({ navBar: { cartIcon: { text: '1', disabled: false } } });
+        app.navBar.cartIcon.click();
+        await app.expect({ checkoutForm: { cartPage: {}, nextButton: { text: 'Next', disabled: false } } });
+        app.checkoutForm.nextButton.click();
+        await app.expect({ checkoutForm: { shippingAddressPage: {}, } });
+        app.checkoutForm.shippingAddressPage.enterFields({
+            firstName: 'Max', lastName: 'Zabunkov', address1: 'Home', city: 'Tosno', country: 'RF', zipCode: '187000'
+        });
+        await app.expect({ checkoutForm: { nextButton: { text: 'Next', disabled: false } } });
+        app.checkoutForm.nextButton.click();
+        await app.expect({ checkoutForm: { paymentDetailsPage: {} } });
+        app.checkoutForm.paymentDetailsPage.enterFields({ cardName: 'Max', cardNumber: '1234 5678', expDate: '10/21', cvv: 'cvv' });
+        await app.expect({ checkoutForm: { paymentDetailsPage: {}, nextButton: { text: 'Next', disabled: false } } });
+        app.checkoutForm.nextButton.click();
+        await app.expect({ checkoutForm: { reviewOrderPage: {}, nextButton: { text: 'Place Order', disabled: false } } });
+
+        app.checkoutForm.nextButton.click();
+
+        await mock.placeOrder.setup(new Error('server error'));
+        await app.expect({
+            checkoutForm: {
+                orderPage: {
+                    hasProgressIndicator: false,
+                    title: 'Error.',
+                    text: 'TBD'
+                }
+            }
+        });
+    }));
 
     test('Checkout form: should disappear when user click outside', () => act(async () => {
         mock.getCats.setup(mockCats({ name: 'my cat', price: 123 }));

@@ -1,7 +1,7 @@
 import createSagaMiddleware from "@redux-saga/core";
 import { mount } from "enzyme";
 import { applyMiddleware, createStore } from "redux";
-import { AppApi, CatInfo } from "../../api/contracts";
+import { AppApi } from "../../api/contracts";
 import { AppComponent } from "../../create-app-component";
 import { rootSaga } from "../../sagas/root.saga";
 import { rootReducer } from "../../slices/root.reducer";
@@ -14,10 +14,10 @@ export { mockCats } from './api-mock';
 export type UiApi = CatShopDsl & { dispose(): void };
 export type MockApi = ApiMock<AppApi>;
 
-export function userOpensApplication(cats?: CatInfo[]): [UiApi, MockApi] {
+export function userOpensApplication(): [UiApi, MockApi] {
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
-    const api = createMockApi(cats);
+    const api = createMockApi();
     const root = mount(<AppComponent store={store} />)
     const sagaTask = sagaMiddleware.run(rootSaga, api);
 

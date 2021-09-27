@@ -1,7 +1,7 @@
 import { CatInfo, AppApi } from "../../api/contracts";
 import { ApiMock, MockUtils } from "../tools/mock-utils";
 
-export function createMockApi(cats: CatInfo[] = []): AppApi {
+export function createMockApi(): AppApi {
     return {
         getCats: MockUtils.requestMock('getCats'),
         placeOrder: MockUtils.requestMock('placeOrder')
