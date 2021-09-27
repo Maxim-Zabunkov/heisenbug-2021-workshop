@@ -60,7 +60,7 @@ Each commit in this repository will solve single or rarely several step in our p
 
 - **7. Allure reporting.**
   * ~~7.1 setup jest-allure reporter~~
-  * 7.2 export test steps
+  * ~~7.2 export test steps~~
   * 7.3 upload allure-results to Allure Test Ops
 
 ### Summarize results

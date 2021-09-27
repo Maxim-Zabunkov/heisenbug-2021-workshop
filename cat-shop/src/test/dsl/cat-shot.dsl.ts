@@ -1,6 +1,5 @@
 import { CircularProgress, FormHelperText, Grid, Modal, TextField } from "@material-ui/core";
-import { ComponentClass, ComponentType, ReactWrapper, StatelessComponent } from "enzyme";
-import { read } from "fs";
+import { ReactWrapper } from "enzyme";
 import Card from "../../components/card/card";
 import AddressForm from "../../components/checkout/address-form";
 import Cart from "../../components/checkout/cart";
@@ -10,7 +9,7 @@ import PaymentForm from "../../components/checkout/payment-form";
 import { Purchase } from "../../components/checkout/purchase";
 import Review from "../../components/checkout/review";
 import TopBar from "../../components/top-bar/top-bar";
-import { Expected, expectState, getText, itemsReader, readState, simulateClick, simulateInputChange, textReader } from "../tools";
+import { Allure, Expected, expectState, getText, itemsReader, readState, simulateClick, simulateInputChange, textReader } from "../tools";
 
 interface CatShopState {
     navBar: NavBarState;
@@ -133,74 +132,93 @@ type StateReader<T> = (control: ReactWrapper<any, any>, expected: Expected<T>) =
 export class CatShopDsl {
     readonly navBar = {
         search: {
-            type: (text: string) => simulateInputChange(this.root.find(TopBar).find('input[id="search"]'), text)
+            type: (text: string) =>
+                Allure.step(`[UI] navBar.search.type(${text})`, () =>
+                    simulateInputChange(this.root.find(TopBar).find('input[id="search"]'), text))
         },
         cartIcon: {
-            click: () => simulateClick(this.root.find(TopBar).find('button[id="cart"]'))
+            click: () =>
+                Allure.step(`[UI] navBar.cartIcon.click()`, () =>
+                    simulateClick(this.root.find(TopBar).find('button[id="cart"]')))
         }
     }
 
     get cats() {
         const cats = this.root.find(Card);
-        return cats.map(card => ({
+        return cats.map((card, index) => ({
             cartIcon: {
-                click: () => simulateClick(card.find('button[id="cart-icon"]'))
+                click: () =>
+                    Allure.step(`[UI] cats[${index}].cartIcon.click()`, () =>
+                        simulateClick(card.find('button[id="cart-icon"]')))
             },
             addIcon: {
-                click: () => simulateClick(card.find('button[id="add-icon"]'))
+                click: () =>
+                    Allure.step(`[UI] cats[${index}].addIcon.click()`, () =>
+                        simulateClick(card.find('button[id="add-icon"]')))
             },
             removeIcon: {
-                click: () => simulateClick(card.find('button[id="remove-icon"]'))
+                click: () =>
+                    Allure.step(`[UI] cats[${index}].removeIcon.click()`, () =>
+                        simulateClick(card.find('button[id="remove-icon"]')))
             }
         }));
     }
 
     readonly checkoutForm = {
         nextButton: {
-            click: () => simulateClick(this.root.find(Checkout).find('button[id="next"]'))
+            click: () =>
+                Allure.step(`[UI] checkoutForm.nextButton.click()`, () =>
+                    simulateClick(this.root.find(Checkout).find('button[id="next"]')))
         },
-        clickOutside: () => {
-            const checkoutForm = this.root.find(Checkout);
-            if (!checkoutForm.exists())
-                throw new Error('Checkout form is not shown');
-            const onClose = checkoutForm.find(Modal).invoke('onClose');
-            if (onClose)
-                onClose({}, 'backdropClick');
-        },
+        clickOutside: () =>
+            Allure.step(`[UI] checkoutForm.clickOutside()`, () => {
+                const checkoutForm = this.root.find(Checkout);
+                if (!checkoutForm.exists())
+                    throw new Error('Checkout form is not shown');
+                const onClose = checkoutForm.find(Modal).invoke('onClose');
+                if (onClose)
+                    onClose({}, 'backdropClick');
+            }),
         cartPage: {
             getCatLine: (index: number) => {
                 const line = this.root.find(Cart).find(Purchase).at(index);
                 return {
                     addIcon: {
-                        click: () => simulateClick(line.find('button[id="add"]'))
+                        click: () =>
+                            Allure.step(`[UI] checkoutForm.cartPage.cats[${index}].addIcon.click()`, () =>
+                                simulateClick(line.find('button[id="add"]')))
                     },
                     removeIcon: {
-                        click: () => simulateClick(line.find('button[id="remove"]'))
+                        click: () =>
+                            Allure.step(`[UI] checkoutForm.cartPage.cats[${index}].removeIcon.click()`, () =>
+                                simulateClick(line.find('button[id="remove"]')))
                     }
                 };
             }
         },
         shippingAddressPage: {
-            enterFields: (fields: EnterFields<ShippingAddressFields>) => {
-                const inputs = this.root.find(AddressForm).find('input');
-                if (fields.firstName !== undefined) simulateInputChange(inputs.filter({ id: 'firstName' }), fields.firstName);
-                if (fields.lastName !== undefined) simulateInputChange(inputs.filter({ id: 'lastName' }), fields.lastName);
-                if (fields.address1 !== undefined) simulateInputChange(inputs.filter({ id: 'address1' }), fields.address1);
-                if (fields.address2 !== undefined) simulateInputChange(inputs.filter({ id: 'address2' }), fields.address2);
-                if (fields.city !== undefined) simulateInputChange(inputs.filter({ id: 'city' }), fields.city);
-                if (fields.state !== undefined) simulateInputChange(inputs.filter({ id: 'state' }), fields.state);
-                if (fields.country !== undefined) simulateInputChange(inputs.filter({ id: 'country' }), fields.country);
-                if (fields.zipCode !== undefined) simulateInputChange(inputs.filter({ id: 'zip' }), fields.zipCode);
-            }
+            enterFields: (fields: EnterFields<ShippingAddressFields>) =>
+                Allure.step(`[UI] checkoutForm.shippimgAddressPage.enterFields(${JSON.stringify(fields)})`, () => {
+                    const inputs = this.root.find(AddressForm).find('input');
+                    if (fields.firstName !== undefined) simulateInputChange(inputs.filter({ id: 'firstName' }), fields.firstName);
+                    if (fields.lastName !== undefined) simulateInputChange(inputs.filter({ id: 'lastName' }), fields.lastName);
+                    if (fields.address1 !== undefined) simulateInputChange(inputs.filter({ id: 'address1' }), fields.address1);
+                    if (fields.address2 !== undefined) simulateInputChange(inputs.filter({ id: 'address2' }), fields.address2);
+                    if (fields.city !== undefined) simulateInputChange(inputs.filter({ id: 'city' }), fields.city);
+                    if (fields.state !== undefined) simulateInputChange(inputs.filter({ id: 'state' }), fields.state);
+                    if (fields.country !== undefined) simulateInputChange(inputs.filter({ id: 'country' }), fields.country);
+                    if (fields.zipCode !== undefined) simulateInputChange(inputs.filter({ id: 'zip' }), fields.zipCode);
+                })
         },
         paymentDetailsPage: {
-            enterFields: (fields: EnterFields<PaymentDetailsFields>) => {
-                const inputs = this.root.find(PaymentForm).find('input');
-                if (fields.cardName !== undefined) simulateInputChange(inputs.filter({ id: 'cardName' }), fields.cardName);
-                if (fields.cardNumber !== undefined) simulateInputChange(inputs.filter({ id: 'cardNumber' }), fields.cardNumber);
-                if (fields.expDate !== undefined) simulateInputChange(inputs.filter({ id: 'expDate' }), fields.expDate);
-                if (fields.cvv !== undefined) simulateInputChange(inputs.filter({ id: 'cvv' }), fields.cvv);
-            }
+            enterFields: (fields: EnterFields<PaymentDetailsFields>) =>
+                Allure.step(`[UI] checkoutForm.paymentDetailsPage.enterFields(${JSON.stringify(fields)})`, () => {
+                    const inputs = this.root.find(PaymentForm).find('input');
+                    if (fields.cardName !== undefined) simulateInputChange(inputs.filter({ id: 'cardName' }), fields.cardName);
+                    if (fields.cardNumber !== undefined) simulateInputChange(inputs.filter({ id: 'cardNumber' }), fields.cardNumber);
+                    if (fields.expDate !== undefined) simulateInputChange(inputs.filter({ id: 'expDate' }), fields.expDate);
+                    if (fields.cvv !== undefined) simulateInputChange(inputs.filter({ id: 'cvv' }), fields.cvv);
+                })
         },
     }
 
@@ -208,7 +226,8 @@ export class CatShopDsl {
     }
 
     expect(expected: Expected<CatShopState>): Promise<void> {
-        return expectState('ui', expected, this.getState.bind(this));
+        return Allure.step(`[UI] expect(${JSON.stringify(expected)})`, () =>
+            expectState('ui', expected, this.getState.bind(this)));
     }
 
     private getState(expected: Expected<CatShopState>): Expected<CatShopState> {
