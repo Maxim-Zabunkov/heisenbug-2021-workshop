@@ -53,10 +53,10 @@ Each commit in this repository will solve single or rarely several step in our p
   * ~~5.4 automate blocked tests~~
     - ~~PROD bug found: Application does not handle placeOrder() reject~~
 
-- **6. Collect code coverage. Examine our tests.**
+- **~~6. Collect code coverage. Examine our tests.~~**
   * ~~6.1 setup `jest` to collect code coverage~~
   * ~~6.2 review code coverage report. Figure out new test cases. Add `todo`-tests~~
-  * 6.3 split features into several `feature.ts` files to boost `jest`
+  * ~~6.3 split features into several `feature.ts` files to boost `jest`.~~
 
 - **7. Allure reporting.**
   * 7.1 setup jest-allure reporter
